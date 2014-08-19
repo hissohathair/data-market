@@ -1,4 +1,5 @@
-var timelineAPI = require('../lib/api/timeline')
+var timeline = require('../lib/api/timeline'),
+	google = require('../lib/api/google');
 
 exports.init = function(app) {
 	app.get('/', function(req, res){
@@ -6,8 +7,10 @@ exports.init = function(app) {
 	});	
 
 	app.get('/timeline', function(req, res) {
-		timelineAPI.getTimeline(req.query.term, function(responsePayload) {			
-			res.json(responsePayload);
+		google.authorize(app, res, function(res, oauth2Client) {
+			timeline.getTimeline(req.query.term, function(payload) {
+				res.json(payload);
+			});
 		});
 	});
 };
