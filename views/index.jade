@@ -1,13 +1,16 @@
 extends layout
 
+
 block content
 	div(class='wrapper')
 	header
 	div(class='container', name='queryTermForm')
-		form(method='get', role='form', action='timeline')
+		form(role='form', action='javascript:void();')
 			div(class='form-group')
-				label(for='queryTerm') Query term
-				input(type='text', class='form-control', id='queryTerm', name='term', placeholder='Enter query term')
-			button(type='submit', class='btn btn-default') Submit
+				label(for='query-term') Query term
+				input(id='query-term' type='text', class='form-control', name='term', placeholder='Enter query term')
+			button(id='query-submit', class='btn btn-primary', data-toggle='popover', title='Please authorize request', data-content='<div class="row"><div class="col-xs-12">This request requires you to authenticate with Google and approve this app to perform queries against your GMail account:</div><div class="col-xs-12" style="margin-top: 5px; text-align: right;"><button id="authenticate-now" class="btn btn-primary">Authenticate request</button></div></div>') Submit
+
+
 	footer
 
