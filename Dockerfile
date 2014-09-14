@@ -4,39 +4,51 @@
 # We build on phusion/passenger-docker. Get latest build number from here:
 #	https://github.com/phusion/passenger-docker/blob/master/Changelog.md
 #
-#FROM phusion/passenger-full:0.9.11
-FROM phusion/passenger-customizable:0.9.11
+FROM phusion/passenger-nodejs
 MAINTAINER Daniel Austin <daniel.austin@smartservicescrc.com.au>
 
 # Set correct environment variables.
 ENV HOME /root
 
-# Use baseimage-docker's init process.
-CMD ["/sbin/my_init"]
-
-# Build system and git.
-RUN apt-get update
-RUN apt-get -y upgrade
-RUN /build/utilities.sh
-
-# Common development headers necessary for many libraries
-RUN /build/devheaders.sh
-
-# Node.js and Meteor support.
-RUN /build/nodejs.sh
 
 # Enable Nginx & Passenger
-RUN rm -f /etc/service/nginx/down
-ADD ./conf/nginx.conf /etc/nginx/nginx.conf
-ADD ./conf/nginx-default.conf /etc/nginx/sites-available/default
-ADD ./conf/webapp.conf /etc/nginx/sites-enabled/webapp.conf
+# [TODO: For now, just running Node.js directly]
+#
+##RUN rm -f /etc/service/nginx/down
+##ADD ./conf/nginx.conf /etc/nginx/nginx.conf
+##ADD ./conf/nginx-default.conf /etc/nginx/sites-available/default
+##ADD ./conf/data-market.conf /etc/nginx/sites-enabled/data-market.conf
 
-# TODO: RUN ...commands to place your web app in /home/app/webapp..
-RUN mkdir /home/app/webapp
 
-# Private expose web port
+# Node.js should already be installed. Make sure NPM is also there.
+#
+RUN apt-get -y install npm
+
+
+# Place web app in /home/app
+#
+RUN mkdir /home/app/data-market
+ADD ./lib /home/app/data-market
+ADD ./public /home/app/data-market
+ADD ./routes /home/app/data-market
+ADD ./views /home/app/data-market
+ADD ./app.js /home/app/data-market
+ADD ./package.json /home/app/data-market
+
+RUN mkdir /etc/service/data-market
+ADD ./conf/data-market.sh /etc/service/data-market/run
+
+RUN cd /home/app/data-market && npm install
+
+
+# Clean up and run
+#
+EXPOSE 443
 EXPOSE 80
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Use baseimage-docker's init process.
+CMD ["/sbin/my_init"]
 
