@@ -28,23 +28,24 @@ RUN apt-get -y install npm
 # Place web app in /home/app
 #
 RUN mkdir /home/app/data-market
-ADD ./lib /home/app/data-market
-ADD ./public /home/app/data-market
-ADD ./routes /home/app/data-market
-ADD ./views /home/app/data-market
-ADD ./app.js /home/app/data-market
-ADD ./package.json /home/app/data-market
+ADD ./lib /home/app/data-market/lib
+ADD ./public /home/app/data-market/public
+ADD ./routes /home/app/data-market/routes
+ADD ./views /home/app/data-market/views
+ADD ./app.js /home/app/data-market/app.js
+ADD ./package.json /home/app/data-market/package.json
 
 RUN mkdir /etc/service/data-market
 ADD ./conf/data-market.sh /etc/service/data-market/run
+RUN chmod 755 /etc/service/data-market/run
 
 RUN cd /home/app/data-market && npm install
 
 
 # Clean up and run
 #
-EXPOSE 443
-EXPOSE 80
+##EXPOSE 443
+EXPOSE 3000
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
