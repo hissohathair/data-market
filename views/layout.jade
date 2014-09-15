@@ -1,13 +1,35 @@
 doctype html
 html
 	head
+		meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
 		title= title
 		link(rel='stylesheet', href='/stylesheets/style.css')
-		link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
-		link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css')
-		script(type='text/javascript', language='Javscript', src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
-		script(type='text/javascript', language='Javscript', src='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')
+		link(rel="stylesheet", type="text/css", media="screen", href="css/bootstrap.min.css")
+		link(rel="stylesheet", type="text/css", media="screen", href="css/font-awesome.min.css")
 
-		meta(name='viewport', content='width=device-width, initial-scale=1')
+		link(rel="stylesheet", type="text/css", media="screen", href="css/smartadmin-production.min.css")
+		link(rel="stylesheet", type="text/css", media="screen", href="css/smartadmin-skins.min.css")
+
+		link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700")
+
+		meta(name="apple-mobile-web-app-capable", content="yes")
+		meta(name="apple-mobile-web-app-status-bar-style", content="black")
+		
+		link(rel="apple-touch-startup-image", href="img/splash/ipad-landscape.png", media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)")
+		link(rel="apple-touch-startup-image", href="img/splash/ipad-portrait.png", media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)")
+		link(rel="apple-touch-startup-image", href="img/splash/iphone.png", media="screen and (max-device-width: 320px)")
+
+
 	body
 		block content
+
+		script(type="text/javascript").
+			$(document).ready(function() {
+				pageSetUp();
+			})
+
+			google.load("visualization", "1", {packages:["corechart"]});
+
+
+
+
