@@ -8,6 +8,10 @@ exports.init = function(app) {
 
 	app.get('/timeline', function(req, res) {
 		google.ensureAuthorization(function() {
+			console.log('Request is authenticated, proceeding to querying timeline');
+			req.setTimeout(10*60*1000, function() {
+				console.log('Timeout!');
+			});
 			timeline.getTimeline(req.query.term, function(emails) {
 				console.log('Now sending back', emails);
 				res.json({
@@ -18,6 +22,7 @@ exports.init = function(app) {
 				});
 			});
 		}, function(authenticationUrl) {
+			console.log('Request needs authentication');
 			res.json({
 				type: 'needs_authentication',
 				payload: {
