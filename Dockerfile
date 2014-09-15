@@ -32,6 +32,7 @@ ADD ./lib /home/app/data-market/lib
 ADD ./public /home/app/data-market/public
 ADD ./routes /home/app/data-market/routes
 ADD ./views /home/app/data-market/views
+ADD ./products-WB0573SK0 /home/app/data-market/products-WB0573SK0
 ADD ./app.js /home/app/data-market/app.js
 ADD ./package.json /home/app/data-market/package.json
 
